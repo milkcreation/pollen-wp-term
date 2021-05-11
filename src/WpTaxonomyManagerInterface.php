@@ -2,39 +2,35 @@
 
 declare(strict_types=1);
 
-namespace Pollen\WpTaxonomy;
+namespace Pollen\WpTerm;
 
-use Pollen\Support\Concerns\BootableTraitInterface;
-use Pollen\Support\Concerns\ConfigBagAwareTraitInterface;
 use Pollen\Support\Proxy\ContainerProxyInterface;
-use WP_Term;
-use WP_Term_Query;
 
-interface WpTaxonomyManagerInterface extends BootableTraitInterface, ConfigBagAwareTraitInterface, ContainerProxyInterface
+interface WpTaxonomyManagerInterface extends ContainerProxyInterface
 {
     /**
-     * Chargement.
+     * Récupération de la liste des instance de taxonomies déclarées.
      *
-     * @return static
+     * @return WpTaxonomyInterface[]|array
      */
-    public function boot(): WpTaxonomyManagerInterface;
+    public function all(): array;
 
     /**
-     * Instance du terme de taxonomie courante ou associée à une définition.
+     * Récupération d'une instance de taxonomie déclarée.
      *
-     * @param string|int|WP_Term|null $term
+     * @param string $name.
      *
-     * @return WpTermQueryInterface|null
+     * @return WpTaxonomyInterface|null
      */
-    public function term($term = null): ?WpTermQueryInterface;
+    public function get(string $name): ?WpTaxonomyInterface;
 
     /**
-     * Liste des instances de termes de taxonomie courants ou associés à une requête WP_Term_Query ou associés à
-     * une liste d'arguments.
+     * Déclaration d'une taxonomie.
      *
-     * @param WP_Term_Query|array|null $query
+     * @param string $name
+     * @param WpTaxonomyInterface|array $taxonomyDef
      *
-     * @return WpTermQueryInterface[]|array
+     * @return WpTaxonomyInterface
      */
-    public function terms($query = null): array;
+    public function register(string $name, $taxonomyDef): WpTaxonomyInterface;
 }

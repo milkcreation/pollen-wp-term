@@ -1,7 +1,7 @@
 {
-  "name": "pollen-solutions/wp-taxonomy",
-  "description": "Pollen Wordpress Taxonomy Component.",
-  "homepage": "https://www.presstify.com/pollen-solutions/wp-taxonomy/",
+  "name": "pollen-solutions/wp-term",
+  "description": "Pollen Wordpress Term Component.",
+  "homepage": "https://www.presstify.com/pollen-solutions/wp-term/",
   "keywords": [
     "pollen-solutions",
     "component",
@@ -9,7 +9,7 @@
     "taxonomy",
     "term"
   ],
-  "time": "2021-05-03",
+  "time": "2021-05-11",
   "license": "MIT",
   "authors": [
     {
@@ -35,12 +35,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Pollen\\WpTaxonomy\\": "src"
+      "Pollen\\WpTerm\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Pollen\\WpTaxonomy\\Test\\": "tests"
+      "Pollen\\WpTerm\\Test\\": "tests"
     }
   },
   "suggest": {

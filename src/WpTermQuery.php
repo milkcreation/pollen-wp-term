@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pollen\WpTaxonomy;
+namespace Pollen\WpTerm;
 
 use Pollen\Support\Arr;
 use Pollen\Support\ParamsBag;
@@ -211,7 +211,7 @@ class WpTermQuery extends ParamsBag implements WpTermQueryInterface
     public static function is($instance): bool
     {
         return $instance instanceof static &&
-            ((($taxonomy = static::$taxonomy) && ($taxonomy !== 'any')) ? $instance->taxIn($taxonomy) : true);
+            (!(($taxonomy = static::$taxonomy) && ($taxonomy !== 'any')) || $instance->taxIn($taxonomy));
     }
 
     /**

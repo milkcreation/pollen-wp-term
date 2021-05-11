@@ -2,88 +2,68 @@
 
 declare(strict_types=1);
 
-namespace Pollen\WpTaxonomy;
+namespace Pollen\WpTerm;
 
-use Pollen\Support\Concerns\BootableTrait;
-use Pollen\Support\Concerns\ConfigBagAwareTrait;
-use Pollen\Support\Exception\ManagerRuntimeException;
 use Pollen\Support\Proxy\ContainerProxy;
 use Psr\Container\ContainerInterface as Container;
 
 class WpTaxonomyManager implements WpTaxonomyManagerInterface
 {
-    use BootableTrait;
-    use ConfigBagAwareTrait;
     use ContainerProxy;
 
     /**
-     * Instance principale.
-     * @var static|null
+     * Instance du gestionnaire des post Wordpress.
+     * @var WpTermManagerInterface
      */
-    private static $instance;
+    protected $wpTerm;
 
     /**
-     * @param array $config
-     * @param Container|null $container Instance du conteneur d'injection de dépendances.
-     *
-     * @return void
+     * Liste des types de post déclarés.
+     * @var WpTaxonomyInterface[]|array
      */
-    public function __construct(array $config = [], ?Container $container = null)
+    public $taxonomies = [];
+
+    /**
+     * @param WpTermManagerInterface $wpTerm
+     * @param Container|null $container
+     */
+    public function __construct(WpTermManagerInterface $wpTerm, ?Container $container = null)
     {
-        $this->setConfig($config);
+        $this->wpTerm = $wpTerm;
 
         if ($container !== null) {
             $this->setContainer($container);
         }
-
-        if ($this->config('boot_enabled', true)) {
-            $this->boot();
-        }
-
-        if (!self::$instance instanceof static) {
-            self::$instance = $this;
-        }
-    }
-
-    /**
-     * Récupération de l'instance principale.
-     *
-     * @return static
-     */
-    public static function getInstance(): WpTaxonomyManagerInterface
-    {
-        if (self::$instance instanceof self) {
-            return self::$instance;
-        }
-        throw new ManagerRuntimeException(sprintf('Unavailable [%s] instance', __CLASS__));
     }
 
     /**
      * @inheritDoc
      */
-    public function boot(): WpTaxonomyManagerInterface
+    public function all(): array
     {
-        if (!$this->isBooted()) {
+        return $this->taxonomies;
+    }
 
-            $this->setBooted();
+    /**
+     * @inheritDoc
+     */
+    public function get(string $name): ?WpTaxonomyInterface
+    {
+        return $this->taxonomies[$name] ?? null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function register(string $name,$taxonomyDef): WpTaxonomyInterface
+    {
+        if (!$taxonomyDef instanceof WpTaxonomyInterface) {
+            $taxonomy = new WpTaxonomy($name, is_array($taxonomyDef) ? $taxonomyDef : []);
+        } else {
+            $taxonomy = $taxonomyDef;
         }
+        $this->taxonomies[$name] = $taxonomy;
 
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function term($term = null): ?WpTermQueryInterface
-    {
-        return WpTermQuery::create($term);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function terms($query = null): array
-    {
-        return WpTermQuery::fetch($query);
+        return $taxonomy;
     }
 }

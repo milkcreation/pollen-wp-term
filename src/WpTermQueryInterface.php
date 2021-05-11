@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pollen\WpTaxonomy;
+namespace Pollen\WpTerm;
 
 use Pollen\Support\ParamsBagInterface;
 use WP_Term;
