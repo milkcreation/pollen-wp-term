@@ -136,6 +136,14 @@ class WpTermManager implements WpTermManagerInterface
     /**
      * @inheritDoc
      */
+    public function registerTaxonomy(string $name, $taxonomyDef = []): WpTaxonomyInterface
+    {
+        return $this->taxonomyManager()->register($name, $taxonomyDef);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function taxonomyManager(): WpTaxonomyManagerInterface
     {
         if ($this->taxonomyManager === null) {
@@ -143,13 +151,5 @@ class WpTermManager implements WpTermManagerInterface
                 ? $this->containerGet(WpTaxonomyManagerInterface::class) : new WpTaxonomyManager($this);
         }
         return $this->taxonomyManager;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function registerTaxonomy(string $name, $taxonomyDef = []): WpTaxonomyInterface
-    {
-        return $this->taxonomyManager()->register($name, $taxonomyDef);
     }
 }
