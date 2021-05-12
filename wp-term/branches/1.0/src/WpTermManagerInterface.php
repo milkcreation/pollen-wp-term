@@ -48,13 +48,6 @@ interface WpTermManagerInterface extends BootableTraitInterface, ConfigBagAwareT
     public function getTaxonomy(string $name): ?WpTaxonomyInterface;
 
     /**
-     * Instance du gestionnaire de taxonomies.
-     *
-     * @return WpTaxonomyManagerInterface
-     */
-    public function taxonomyManager(): WpTaxonomyManagerInterface;
-
-    /**
      * Déclaration d'une taxonomie.
      *
      * @param string $name
@@ -63,4 +56,11 @@ interface WpTermManagerInterface extends BootableTraitInterface, ConfigBagAwareT
      * @return WpTaxonomyInterface
      */
     public function registerTaxonomy(string $name, $taxonomyDef = []): WpTaxonomyInterface;
+
+    /**
+     * Instance du gestionnaire de taxonomies.
+     *
+     * @return WpTaxonomyManagerInterface
+     */
+    public function taxonomyManager(): WpTaxonomyManagerInterface;
 }
