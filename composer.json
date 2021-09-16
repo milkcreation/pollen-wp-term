@@ -1,7 +1,7 @@
 {
   "name": "pollen-solutions/wp-term",
   "description": "Pollen Wordpress Term Component.",
-  "homepage": "https://www.presstify.com/pollen-solutions/wp-term/",
+  "homepage": "https://github.com/milkcreation/pollen-wp-term.git",
   "keywords": [
     "pollen-solutions",
     "component",
@@ -9,19 +9,12 @@
     "taxonomy",
     "term"
   ],
-  "time": "2021-05-12",
+  "time": "2021-09-16",
   "license": "MIT",
   "authors": [
     {
       "name": "Jordy Manner",
-      "email": "jordy@presstify.com",
-      "role": "Developper"
-    }
-  ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://composer.presstify.com/pollen-solutions/"
+      "email": "jordy@presstify.com"
     }
   ],
   "require": {
